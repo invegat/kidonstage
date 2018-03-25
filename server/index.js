@@ -36,7 +36,7 @@ mongoose
     server.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
     console.log('All your databases are belong to us!');
-    const PORT = process.env.PORT || 5003;
+    const port = process.env.PORT || 5003;
     server.listen(port, function () {
       console.log(`Server running on port ${port}`);
     });
