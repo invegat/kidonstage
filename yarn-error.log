@@ -1,0 +1,66 @@
+Arguments: 
+  C:\Program Files (x86)\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+
+PATH: 
+  C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\ImageMagick-6.9.1-Q16;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\PageTech\PCLWorkx64_150\;c:\Users\Mark\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\IDM Computer Solutions\UltraCompare;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\IDM Computer Solutions\UltraCompare;C:\Program Files\dotnet\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI\wbin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\dotnet\;C:\Program Files\Microsoft DNX\Dnvm\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\PuTTY\;C:\Program Files (x86)\Yarn\bin\;C:\Users\Mark\.dnx\runtimes\dnx-clr-win-x86.1.0.0-rc1-update1\bin;C:\Users\Mark\.dnx\bin;c:\Users\Mark\Downloads\tesseract 3.01\Tesseract-ocr\;f:/twain;f:\devl\tools\;c:\Program Files (x86)\HxD\;C:\Program Files\Microsoft VS Code\bin;C:\Users\Mark\AppData\Roaming\npm;C:\Users\Mark\AppData\Local\Microsoft\WindowsApps;C:\Users\Mark\AppData\Local\Yarn\bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  9.9.0
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  {
+    "name": "heroku-cra-node",
+    "version": "1.0.0",
+    "description": "How to use create-react-app with a custom Node API on Heroku",
+    "engines": {
+      "node": "8.9.x"
+    },
+    "scripts": {
+      "start": "node server",
+      "heroku-postbuild": "cd react-ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    },
+    "cacheDirectories": [
+      "node_modules",
+      "react-ui/node_modules"
+    ],
+    "dependencies": {
+      "express": "^4.14.1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mars/heroku-cra-node.git"
+    },
+    "keywords": [
+      "node",
+      "heroku",
+      "create-react-app",
+      "react"
+    ],
+    "license": "MIT",
+    "devDependencies": {}
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Found incompatible module
+      at new MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
+      at Object.checkOne (C:\Program Files (x86)\Yarn\lib\cli.js:62444:11)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:22773:75
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:116:14
+      at new Promise (<anonymous>)
+      at new F (C:\Program Files (x86)\Yarn\lib\cli.js:23451:28)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:95:12
+      at C:\Program Files (x86)\Yarn\lib\cli.js:22777:27
