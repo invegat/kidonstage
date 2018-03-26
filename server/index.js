@@ -41,7 +41,7 @@ mongoose
   .connect(AtlasMongoIUrl + `&collection=${accountCollection}`, { useMongoClient: true })
   .then((db) => {
     // Priority serve any static files.
-    // server.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+    server.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
     console.log('All your databases are belong to us!');
 

@@ -6,9 +6,9 @@
     "node": "8.9.x"
   },
   "scripts": {
-    "server": "node server",
+    "start": "node server",
     "client": "cd react-ui && yarn start",
-    "start": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",    
+    "dev": "concurrently --kill-others-on-fail \"yarn start\" \"yarn client\"",    
     "heroku-postbuild-npm": "cd react-ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "heroku-postbuild": "cd react-ui/ && yarn --production=false && yarn build"
   },

@@ -6,7 +6,7 @@ export const ADD_ACCOUNT = 'ADD_ACCOUNT';
 export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT';
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 
-const port = process.env.port || 5003;
+const port = window.env.port || 5003;
 
 export const getAccounts = () => {
   const promise = axios.get(`http://localhost:${port}/accounts`);
