@@ -6,7 +6,9 @@
     "node": "8.9.x"
   },
   "scripts": {
-    "start": "node server",
+    "server": "node server",
+    "client": "cd react-ui && yarn start",
+    "start": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",    
     "heroku-postbuild-npm": "cd react-ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "heroku-postbuild": "cd react-ui/ && yarn --production=false && yarn build"
   },
@@ -16,12 +18,16 @@
   ],
   "dependencies": {
     "body-parser": "^1.18.2",
-    "cors": "^2.8.4",    
+    "bufferutil": "^3.0.3",
+    "concurrently": "^3.5.1",
+    "cors": "^2.8.4",
     "express": "^4.14.1",
     "mongodb": "^2.2.33",
     "mongodb-core": "^2.1.17",
     "mongoose": "^4.13.3",
-    "mongoose-double": "^0.0.1"    
+    "mongoose-double": "^0.0.1",
+    "utf-8-validate": "^4.0.0",
+    "ws": "^5.1.0"
   },
   "repository": {
     "type": "git",

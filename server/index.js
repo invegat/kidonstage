@@ -10,10 +10,18 @@ const apiRouter = require('./common/apiRouter.js');
 
 const server = express();
 
+const port = process.env.PORT || 5003;
+
 server.use(cors());
 server.use(bodyParser.json());
 
 server.use('', apiRouter);
+
+// const wss = new SocketServer({ server });
+// wss.on('connection', (ws) => {
+//   console.log('Client connected');
+//   ws.on('close', () => console.log('Client disconnected'));
+// });
 const MongoClient = require('mongodb').MongoClient;
 const AtlasMongoIUrl =
   'mongodb://LambdaDataManager:XPoCMUH4qMHINDKc@mongoi-shard-00-00-2ydlw.mongodb.net:27017,mongoi-shard-00-01-2ydlw.mongodb.net:27017,mongoi-shard-00-02-2ydlw.mongodb.net:27017/mongoi?ssl=true&replicaSet=mongoi-shard-0&authSource=admin';
@@ -33,10 +41,10 @@ mongoose
   .connect(AtlasMongoIUrl + `&collection=${accountCollection}`, { useMongoClient: true })
   .then((db) => {
     // Priority serve any static files.
-    server.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+    // server.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
     console.log('All your databases are belong to us!');
-    const port = process.env.PORT || 5003;
+
     server.listen(port, function () {
       console.log(`Server running on port ${port}`);
     });
