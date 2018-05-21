@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../actions';
-import { Link } from 'react-router-dom';
-
-import './css/login.css';
 // import { TextField } from 'redux-form-material-ui'
 import TextField from 'material-ui/TextField';
 
@@ -14,10 +10,13 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import {
   faArrowRight,
   faUser,
-  faKey
+  faKey,
 } from '@fortawesome/fontawesome-free-solid';
-
+import { Link } from 'react-router-dom';
 import { Navbar, NavbarBrand } from 'mdbreact';
+import { login } from '../actions';
+import './css/login.css';
+import { RenderAlert } from '../App';
 
 const renderTextField = ({
   input,
@@ -28,34 +27,36 @@ const renderTextField = ({
   <TextField
     floatingLabelText={label}
     floatingLabelFocusStyle={{
-      color: 'black'
+      color: 'black',
     }}
     underlineFocusStyle={{
-      borderColor: 'white'
+      borderColor: 'white',
     }}
     underlineStyle={{
-      borderColor: 'grey'
+      borderColor: 'grey',
     }}
     errorText={touched && error}
     {...input}
     {...custom}
     style={{
-      color: 'red'
+      color: 'red',
     }}
   />
 );
-
+renderTextField.defaultProps = {
+  meta: { touched: PropTypes.bool, error: PropTypes.string },
+  label: '',
+};
+renderTextField.propTypes = {
+  input: PropTypes.object.isRequired,
+  label: PropTypes.string,
+  meta: PropTypes.object,
+};
 class SignIn extends Component {
   handleFormSubmit = ({ username, password }) => {
     // console.log(`username: ${username} password: ${password}`);
     this.props.login({ username, password }, this.props.history);
   };
-
-  renderAlert() {
-    if (!this.props.error) return null;
-    return <h3>{this.props.error}</h3>;
-  }
-
   render() {
     const { handleSubmit } = this.props;
 
@@ -92,7 +93,7 @@ class SignIn extends Component {
               <button className="login--button" type="submit">
                 Sign In <FontAwesomeIcon icon={faArrowRight} />
               </button>
-              {this.renderAlert()}
+              {RenderAlert(this)}
               <br /><br /><span>Not a member? <Link to="/signup">Sign Up!</Link></span>
             </form>
           </div>
@@ -103,17 +104,17 @@ class SignIn extends Component {
 }
 
 SignIn.defaultProps = {
-  error: null
+  // error: null,
 };
 SignIn.propTypes = {
   login: PropTypes.func.isRequired,
-  error: PropTypes.string,
+  // error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 };
 const mapStateToProps = state => ({
   error: state.auth.error,
-  authenticated: state.auth.authenticated
+  authenticated: state.auth.authenticated,
 });
 
 SignIn = connect(mapStateToProps, { login })(SignIn);
@@ -122,7 +123,7 @@ SignIn = connect(mapStateToProps, { login })(SignIn);
 
 export default reduxForm({
   form: 'signin',
-  fields: ['username', 'password']
+  fields: ['username', 'password'],
 })(SignIn);
 
 // export default reduxForm({

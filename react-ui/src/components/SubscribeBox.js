@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import AxiosPromise from './axiosPromise';
 import './css/subscriberBox.css';
 import { getEvent, invitedEventSubscribe, getEventInvites } from '../actions';
+import { RenderAlert } from '../App';
 /* eslint-disable react/prefer-stateless-function, no-console */
 class SubscriberBox extends Component {
   constructor(props) {
@@ -99,20 +100,26 @@ class SubscriberBox extends Component {
                 <li key={error}>{error}</li>)}
             </ul>
           }
+          {RenderAlert(this)}
         </form>
       </div>
     );
   }
 }
+SubscriberBox.defaultProps = {
+  // error: undefined,
+};
 SubscriberBox.propTypes = {
   getEvent: PropTypes.func.isRequired,
   invitedEventSubscribe: PropTypes.func.isRequired,
   getEventInvites: PropTypes.func.isRequired,
   eventInvites: PropTypes.arrayOf(PropTypes.object).isRequired,
+  // error: PropTypes.string,
 };
 export default connect(
   state => ({
     eventInvites: state.eventInvites,
+    error: state.data.error,
   }),
   // dispatch => ({ loadEvent: eventId => dispatch(getEvent(eventId)) }),
   { getEvent, invitedEventSubscribe, getEventInvites },

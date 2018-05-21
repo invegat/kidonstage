@@ -7,6 +7,7 @@ import CardSection from './CardSection';
 import AxiosPromise from '.././axiosPromise';
 import { getUser, getEvent, setStripeError } from '../../actions';
 import AddressSection from './AddressSection';
+import { RenderAlert } from '../../App';
 // import PostalCodeSection from './PostalCodeSection';
 
 // const eventId = Number(sessionStorage.getItem('eventId'));
@@ -103,6 +104,7 @@ class CheckoutForm extends React.Component {
             <CardSection />
             <Button enabled={this.ccAddress.name} color="success">Buy Now</Button>
           </Container>
+          {RenderAlert(this)}
         </Form>
       </div>
     );
@@ -112,6 +114,7 @@ export default connect(
   state => ({
     users: state.users,
     event: state.event,
+    error: state.data.error,
   }),
   dispatch => ({
     setUser: () => dispatch(getUser),

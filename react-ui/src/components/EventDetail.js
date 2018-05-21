@@ -13,6 +13,7 @@ import { getEvent, getGroups, getPartGroups, getUser, clearStripeError } from '.
 import RenderGroups from './EventDetailGroups';
 import './css/eventDetail.css';
 import normalizeDate from './normalizers/normalizeDate';
+import RenderAlert from '../App';
 
 /* eslint-disable react/forbid-prop-types */
 
@@ -76,15 +77,16 @@ renderTextField.propTypes = {
     });
 */
 const nomalizeEventDate = (event) => {
+  let formattedDate;
   if (event && event.eventDate) {
     const newDate = normalizeDate(event.eventDate);
     // console.log(`eventDate: ${event.eventDate} newDate: ${newDate}`);
     if (newDate) {
-      event.formattedDate = newDate;
+      formattedDate = newDate;
       // console.log(`set formattedDate: ${event.formattedDate}`);
     }
   }
-  return event;
+  return { ...event, formattedDate };
 };
 class EventsForm extends React.Component {
   constructor(props) {
@@ -92,31 +94,28 @@ class EventsForm extends React.Component {
     const queryString = props.location.search;
     // "?eventId=1&admin=1"
     const queryParams = queryString.match(/eventId=(\d+)&admin=(\d+)/);
-    /* eslint-disable prefer-destructuring */
+    const eventId = Number(queryParams[1]);
     this.state = {
-      eventId: Number(queryParams[1]),
+      eventId,
       admin: Number(queryParams[2]),
     };
     this.props.setUser(); // restore global state user after reset
     this.props.clearStripeError();
+    this.props.load(eventId);
+    this.props.setGroups(eventId);
+    this.props.setPart(eventId);
   }
   componentWillMount() {
   //   clearInterval(this.timerID);
 
-    const { eventId } = this.state;
+
     // console.log(`EventsForm componentDidMount eventId ${eventId} admin ${admin}`);
-    this.props.load(eventId);
-    this.props.setGroups(eventId);
-    this.props.setPart(eventId);
+
   }
   // componentDidUpdate() {
   //   console.log(`componentDidUpdate props error: ${this.props.error}
   //   state error ${this.state.error}`);
   // }
-  renderAlert() {
-    if (!this.props.error) return null;
-    return <h3 className="error">{this.props.error}</h3>;
-  }
   // tick = () => {
   //   console.log(`in tick title: ${this.props.event.title}`);
   //   const newEvent = nomalizeEventDate(this.props.event);
@@ -187,7 +186,7 @@ class EventsForm extends React.Component {
             <br />
               Event Date:{'  '}
             <Field
-              name="event.formattedDate"
+              name="formattedDate"
               type="text"
               component={renderTextField}
               placeholder="Event Date"
@@ -226,7 +225,7 @@ class EventsForm extends React.Component {
             </div>
           </div>
         )}
-        {this.renderAlert()}
+        {RenderAlert(this)}
       </div>
     );
   }
@@ -273,7 +272,7 @@ const fiveLenthDate = (groups, partGroups) => groups.map((group) => {
 export default connect(
   state => ({
     initialValues: { event: nomalizeEventDate(state.event) },
-    loadRowData: (groups, partGroups) => fiveLenthDate(groups, partGroups),
+    loadRowData: fiveLenthDate(state.groups, state.partGroups),
     groups: state.groups,
     partGroups: state.partGroups,
     error: state.stripeError,

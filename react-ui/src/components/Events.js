@@ -7,7 +7,7 @@ import { getEvents } from '../actions';
 import EventCard from './EventCard';
 import NewEventCard from './NewEventCard';
 import SubscribeBox from './SubscribeBox';
-
+import { RenderAlert } from '../App';
 import './css/events.css';
 // import { EPROTO } from 'constants';
 /* eslint-disable no-console */
@@ -80,6 +80,7 @@ class Events extends Component {
           <NewEventCard />
           {EventCards}
           {InvitedEventCards}
+          {RenderAlert(this)}
         </div>
       </div>
     );

@@ -23,19 +23,12 @@ export const GET_EVENTINVITES_EVENTS = 'GET_EVENTINVITES_EVENTS';
 export const ADD_EVENTINVITES_EVENT = 'EDIT_EVENTINVITES_EVENT';
 export const SET_STRIPE_ERROR = 'SET_STRIPE_ERROR';
 export const CLEAR_STRIPE_ERROR = 'CLEAR_STRIPE_ERROR';
-/* eslint-disable no-console, semi-style */
+export const DATA_ERROR = 'DATA_ERROR';
+export const DATA_CLEAR_ERROR = 'DATA_CLEAR_ERROR';
+export const DATA_READ_EVENT = 'DATA_READ_EVENT';
+export const DATA_READ_GROUP = 'DATA_READ_GROUP';
+export const DATA_READ_PART_GROUP = 'DATA_READ_PART_GROUP';
 
-axios.defaults.withCredentials = true;
-
-// invites/events/:eventId/userId/:userId
-// export const geteventInvites = eventId => (dispatch) => {
-//   console.log(`loadEvent eventId: ${eventId}`);
-//   const token = sessionStorage.getItem('token');
-//   const id = sessionStorage.getItem('id');
-//   if (!id || !token) {
-//     dispatch(authError('Not logged in'));
-//     return;
-//   }
 //   const config = {
 //     headers: {
 //       authorization: token,
@@ -84,7 +77,12 @@ axios.defaults.withCredentials = true;
 //       dispatch(authError('Failed to fetch events'));
 //     });
 // };
+/* eslint-disable no-console */
 
+export const dataError = error => ({
+  type: DATA_ERROR,
+  payload: error,
+});
 export const invitedEventSubscribe = eventId => (dispatch) => {
   console.log(`Subscribe Event eventId: ${eventId}`);
   const token = sessionStorage.getItem('token');
@@ -110,7 +108,7 @@ export const invitedEventSubscribe = eventId => (dispatch) => {
     })
     .catch((err) => {
       console.log(`subscibe Event ${err}`);
-      dispatch(authError('Failed to save Subscribe Event'));
+      dispatch(dataError(`Failed to save Subscribe Event: ${err}`));
     });
 };
 export const getEvents = () => (dispatch) => {
@@ -135,9 +133,9 @@ export const getEvents = () => (dispatch) => {
         payload: response.data || [],
       });
     })
-    .catch(() => {
+    .catch((err) => {
       // console.log(err);
-      dispatch(authError('Failed to fetch events'));
+      dispatch(dataError(`Failed to fetch events: ${err}`));
     });
 };
 export const getEventInvites = () => (dispatch) => {
@@ -189,6 +187,10 @@ export const getPartGroups = eventId => (dispatch) => {
       dispatch({
         type: GET_PART_GROUPS,
         payload: response.data || [],
+      });
+      dispatch({
+        type: DATA_READ_PART_GROUP,
+        payload: response.data,
       });
     })
     .catch((err) => {
@@ -253,6 +255,14 @@ export const getGroups = eventId => (dispatch) => {
         type: GET_GROUPS,
         payload: response.data || [],
       });
+      if (response.data && response.data.length) {
+        response.data.forEach((group) => {
+          dispatch({
+            type: DATA_READ_GROUP,
+            payload: group,
+          });
+        });
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -511,17 +521,20 @@ export const getEvent = (eventId, type = 0) => (dispatch) => {
           type: GET_EVENT,
           payload: data,
         });
+        dispatch({
+          type: DATA_READ_GROUP,
+          payload: data,
+        });
       } else {
         dispatch({
           type: ADD_EVENT,
           payload: data,
-        })
-        ;
+        });
       }
     })
     .catch((err) => {
       console.log(`getEvent ${err}`);
-      dispatch(authError('Failed to fetch event'));
+      dispatch(dataError(`Failed to fetch event: ${err}`));
     });
 };
 export const setEventId = eventId => (dispatch) => {

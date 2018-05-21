@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { LinkContainer } from 'react-router-bootstrap';
-
+import PropTypes from 'prop-types';
 import {
   Navbar,
   NavbarBrand,
@@ -9,27 +9,31 @@ import {
   // Collapse,
   // Button,
   NavItem,
-  NavLink
+  NavLink,
 } from 'mdbreact';
 
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import './css/navBar.css';
+import Logo from './graphics/Logo48x48.png';
 
 export default class NavBar extends Component {
+  static propTypes = {
+    auth: PropTypes.bool.isRequired,
+  }
   constructor(props) {
     super(props);
     this.state = {
       collapse: false,
-      isWideEnough: false
+      // isWideEnough: false,
     };
     this.onClick = this.onClick.bind(this);
   }
 
   onClick() {
     this.setState({
-      collapse: !this.state.collapse
+      collapse: !this.state.collapse,
     });
   }
 
@@ -43,7 +47,7 @@ export default class NavBar extends Component {
         scrolling
       >
         <NavbarBrand href="/">
-          <img src={require('./graphics/Logo48x48.png')} alt="logo" />
+          <img src={Logo} alt="logo" />
 
           <strong>Kids on Stage</strong>
         </NavbarBrand>

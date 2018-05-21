@@ -196,8 +196,9 @@ class EventDetailGroupRow extends Component {
       console.log(`group.name: ${group.name} group.time: ${group.time} group.eventId: ${
         group.eventId
       }`);
-      this.props.isValid(this.props.index, (group.id > 0) && this.state.readOnly && group.name &&
-        (group.name.length > 0) && (group.time !== '00:00') && (group.time.length >= 5));
+      const isValid = (group.id > 0) && this.state.readOnly && group.name &&
+        (group.name.length > 0) && (group.time !== '00:00') && (group.time.length >= 5);
+      this.props.isValid(this.props.index, isValid);
       return group.id > 0 ? edit(group) : this.add(group);
     }
     return null;
@@ -234,16 +235,17 @@ class EventDetailGroupRow extends Component {
                 {
                   group: { ...this.state.group, name: newName },
                 },
-                this.sendGroup(this.state.group, edit),
+                this.sendGroup(this.state.group, edit, true),
               );
             }
           }}
         />
         <Field
           name={`${groupText}.time`}
+          id="time"
           type="text"
           placeholder="HH:MM"
-          // normalize={formatTime}
+          normalize={formatTime}
           component="input"
           readOnly={this.state.readOnly}
           style={{
@@ -266,12 +268,25 @@ class EventDetailGroupRow extends Component {
               default:
             }
             if ((!am) && (!pm) && targetLength > 5) return;
-            let onlyNums = event.target.value.replace(/[^\d]/g, '');
-            if (onlyNums.length === 3) onlyNums = `0${onlyNums}`;
+            const onlyNums = event.target.value.replace(/[^\d]/g, '');
+            let hour;
+            // if (onlyNums.length === 3) {
+            //   onlyNums = `0${onlyNums}`;
+            // } else
+            if (onlyNums.length === 4 && (!am) && (!pm)) {
+              hour = Number(onlyNums.slice(0, 2));
+              if (hour < 10) {
+                am = true;
+                pm = false;
+              } else if (hour > 12) {
+                am = false;
+                pm = true;
+              }
+            }
             if (onlyNums < 4) return;
             const minutes = Number(onlyNums.slice(2));
-            let hour = Number(onlyNums.slice(0, 2));
-            if ((am || pm) && (hour > 12)) return;
+            hour = Number(onlyNums.slice(0, 2));
+            // if ((am || pm) && (hour > 12)) return;
             if (hour > 12) { // military time
               hour -= 12;
               am = false;

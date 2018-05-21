@@ -136,7 +136,7 @@ const EventDetail = reduxForm({
 })(EventDetailsGroups);
 // export default EventDetail;
 
-const fiveLenthDate = (state) => {
+export const fiveLenthDate = (state) => {
   return state.groups.map((group) => {
     const userId = Number(sessionStorage.getItem('id'));
     const partIndex = state.partGroups.findIndex(partGroup =>

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { getEvent, getGroups, getPartGroups } from '../actions';
 import './css/events.css';
 import normalizeDate from './normalizers/normalizeDate';
-
+import { RenderAlert } from '../App';
 /* eslint-disable no-console */
 
 class EventCard extends Component {
@@ -31,14 +31,14 @@ class EventCard extends Component {
       <LinkContainer
         exact
         to={queryRoute}
-        onClick={() => {
-          sessionStorage.setItem('eventId', this.state.id); // not used for EventDetail
-          console.log(`EventCard click eventId ${this.state.id}`);
-          this.props.setEvent(this.state.id);
-          this.props.setGroups(this.state.id);
-          this.props.setParts(this.state.id);
-          this.props.reload('EventCard');
-        }}
+        // onClick={() => {
+        //   sessionStorage.setItem('eventId', this.state.id); // not used for EventDetail
+        //   console.log(`EventCard click eventId ${this.state.id}`);
+        //   this.props.setEvent(this.state.id);
+        //   this.props.setGroups(this.state.id);
+        //   this.props.setParts(this.state.id);
+        //   // this.props.reload('EventCard');
+        // }}
       >
         <div className="eventCard--Container">
           {process.env.REACT_APP_ShowEventId === 'true' &&
@@ -55,7 +55,9 @@ class EventCard extends Component {
           {this.props.inviteCode &&
           <div className="eventCard--Invite">Event Invite Code {this.props.inviteCode}</div>
           }
+          {RenderAlert(this)}
         </div>
+
       </LinkContainer>
     );
   }
@@ -75,7 +77,9 @@ EventCard.propTypes = {
 };
 
 // export default EventCard;
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  error: state.data.error,
+});
 const mapDispatchToProps = dispatch => ({
   setEvent: id => dispatch(getEvent(id, 1)),
   setGroups: id => dispatch(getGroups(id)),

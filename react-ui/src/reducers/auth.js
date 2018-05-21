@@ -7,11 +7,12 @@ import {
 } from '../actions';
 
 export default (auth = {}, action) => {
+  const { error, ...clearError } = auth;
   switch (action.type === AUTHENTICATION_ERROR) {
     case USER_REGISTERED:
-      return { ...auth, authenticated: false };
+      return { ...clearError, authenticated: false };
     case USER_AUTHENTICATED:
-      return { ...auth, authenticated: true };
+      return { ...clearError, authenticated: true };
     case USER_UNAUTHENTICATED:
       return { ...auth, authenticated: false };
     case AUTHENTICATION_ERROR:

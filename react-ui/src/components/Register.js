@@ -21,6 +21,7 @@ import { Navbar, NavbarBrand } from 'mdbreact';
 
 import normalizePhone from './normalizers/normalizePhone';
 import { register } from '../actions';
+import { RenderAlert } from '../App';
 import './css/register.css';
 
 const renderTextField = ({
@@ -75,10 +76,6 @@ class Register extends Component {
     );
   };
 
-  renderAlert = () => {
-    if (!this.props.error) return null;
-    return <h3>{this.props.error}</h3>;
-  };
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     // const renderField = ({
@@ -200,6 +197,7 @@ class Register extends Component {
                   Reset
                 </button>
               </div>
+              {RenderAlert(this)}
             </form>
           </div>
         </div>

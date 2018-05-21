@@ -17,10 +17,15 @@ import EventsNew from './components/EventsNew';
 // import RfEvents from './components/RfEvents';
 import EventDetail from './components/EventDetail';
 import Billing from './components/stripe';
+// import NrfEventDetail from './components/NRF_EventDetail';
 
 import './App.css';
 
 /* eslint-disable react/jsx-max-props-per-line, no-console */
+export const RenderAlert = (_this) => {
+  if ((!_this.props.error) || (!_this.props.error.length)) return null;
+  return (<h3>{_this.props.error}</h3>);
+};
 
 class App extends Component {
   static reload(from) {
@@ -46,6 +51,7 @@ class App extends Component {
     }
     return true;
   }
+
   constructor(props) {
     super(props);
     this.state = {

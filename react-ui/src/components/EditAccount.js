@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-
+import PropTypes from 'prop-types';
 import { Navbar, NavbarBrand } from 'mdbreact';
 
 import { TextField } from 'material-ui';
@@ -41,9 +41,17 @@ const renderTextField = ({
     }}
   />
 );
-
 /* eslint-disable no-console, no-class-assign, jsx-a11y/label-has-for,
-               react/prop-types, object-curly-newline */
+               react/prop-types, object-curly-newline, react/forbid-prop-types */
+renderTextField.defaultProps = {
+  meta: { touched: PropTypes.bool, error: PropTypes.string },
+  label: '',
+};
+renderTextField.propTypes = {
+  input: PropTypes.object.isRequired,
+  label: PropTypes.string,
+  meta: PropTypes.object,
+};
 class Settings extends Component {
   constructor(props) {
     super(props);
@@ -79,11 +87,6 @@ class Settings extends Component {
       },
       this.props.history,
     );
-  };
-
-  renderAlert = () => {
-    if (!this.props.error) return null;
-    return <h3>{this.props.error}</h3>;
   };
 
   render() {
